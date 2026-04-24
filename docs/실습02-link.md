@@ -25,12 +25,32 @@
 
 ## ✅ 구현 요구사항
 
-- [ ] **(사전)** `src/components/Header.jsx` 파일을 만드세요. (또는 스타터가 이미 있다면 열어서 TODO를 따르세요.)
-- [ ] **TODO 1:** 먼저 **일부러 `<a href="...">` 태그로** 네비게이션을 작성해서 동작을 확인하세요.
-  - 홈 / 영화 / 소개 3개 링크
-- [ ] **TODO 2:** 브라우저 DevTools → Network 탭을 열고 링크를 클릭해서 **문서가 매번 재요청되는지** 확인하세요.
-- [ ] **TODO 3:** 이제 `<a>` → `<Link to="...">` 로 바꾸고, **이번에는 문서 재요청이 일어나지 않는지** 확인하세요.
-- [ ] **TODO 4:** `App.jsx`에서 `<Routes>` **바깥에** `<Header />`를 배치해, 모든 페이지에서 공통으로 보이게 하세요.
+- [ ] **TODO 1:** `src/components/Header.jsx`를 엽니다. (없다면 생성.) 먼저 **일부러 `<a href="...">` 태그로** 홈/영화/소개 3개 링크를 작성합니다.
+- [ ] **TODO 2:** `src/App.jsx` 에서 **`<Routes>` 바깥**에 `<Header />`를 배치합니다. 이렇게 해야 어느 페이지로 이동해도 네비게이션이 항상 보이고, Header가 재마운트되지 않습니다.
+  ```jsx
+  // src/App.jsx 최종 형태
+  import { Routes, Route } from 'react-router-dom'
+  import Header from './components/Header'
+  import Home from './pages/Home'
+  import Movies from './pages/Movies'
+  import About from './pages/About'
+
+  function App() {
+    return (
+      <>
+        <Header />           {/* ← Routes 바깥, 항상 보임 */}
+        <Routes>
+          <Route path="/"       element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/about"  element={<About />} />
+        </Routes>
+      </>
+    )
+  }
+  export default App
+  ```
+- [ ] **TODO 3:** 브라우저 DevTools → **Network 탭**을 열고 `<a>` 링크를 클릭해서 **문서(Doc)가 매번 재요청되는지** 확인합니다.
+- [ ] **TODO 4:** `Header.jsx`에서 `<a href="...">` → `<Link to="...">` 로 교체합니다. **이번에는 문서 재요청이 사라지는지** 다시 Network 탭으로 확인합니다.
 
 ### 체감 실험 — Home에 카운터 심기
 
