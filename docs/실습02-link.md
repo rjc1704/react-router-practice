@@ -4,7 +4,7 @@
 
 ## 🎯 학습 목표
 
-`<a href>`와 `<Link to>`의 차이를 **직접 네트워크 탭으로 확인**하고, 새로고침 없이 페이지가 전환되는 SPA의 느낌을 체감합니다.
+`<a href>` 와 `<Link to>` 의 차이를 **DevTools Network 탭**으로 직접 확인하고, SPA 특유의 "새로고침 없는 전환"을 체감합니다.
 
 ## 🗺️ 비교 그림
 
@@ -12,127 +12,100 @@
 <a href="/movies">              <Link to="/movies">
        │                                │
    클릭 ▼                            클릭 ▼
-┌──────────────────┐           ┌──────────────────┐
-│ 브라우저가 서버에  │           │ React Router가    │
-│ /movies 요청 📡   │           │ URL만 바꿈 (요청 X)│
-└────────┬─────────┘           └────────┬─────────┘
-         ▼                              ▼
-  HTML 전체 새로 받음              JS가 화면 교체
-         ▼                              ▼
-  ❌ 페이지 전체 새로고침        ✅ 새로고침 없이 전환
-  ❌ 상태 초기화 됨              ✅ 상태 유지
+ 서버에 /movies 요청 📡          URL만 바꿈 (서버 요청 없음)
+       ▼                                ▼
+ HTML 전체 새로 받음              JS가 화면만 교체
+       ▼                                ▼
+ ❌ 전체 새로고침 / 상태 초기화   ✅ 부드러운 전환 / 상태 유지
 ```
 
-## ✅ 구현 요구사항
+## ✅ 할 일 (2개 파일만 건드립니다)
 
-- [ ] **TODO 1:** `src/components/Header.jsx`를 엽니다. (없다면 생성.) 먼저 **일부러 `<a href="...">` 태그로** 홈/영화/소개 3개 링크를 작성합니다.
-- [ ] **TODO 2:** `src/App.jsx` 에서 **`<Routes>` 바깥**에 `<Header />`를 배치합니다. 이렇게 해야 어느 페이지로 이동해도 네비게이션이 항상 보이고, Header가 재마운트되지 않습니다.
-  ```jsx
-  // src/App.jsx 최종 형태
-  import { Routes, Route } from 'react-router-dom'
-  import Header from './components/Header'
-  import Home from './pages/Home'
-  import Movies from './pages/Movies'
-  import About from './pages/About'
-
-  function App() {
-    return (
-      <>
-        <Header />           {/* ← Routes 바깥, 항상 보임 */}
-        <Routes>
-          <Route path="/"       element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/about"  element={<About />} />
-        </Routes>
-      </>
-    )
-  }
-  export default App
-  ```
-- [ ] **TODO 3:** 브라우저 DevTools → **Network 탭**을 열고 `<a>` 링크를 클릭해서 **문서(Doc)가 매번 재요청되는지** 확인합니다.
-- [ ] **TODO 4:** `Header.jsx`에서 `<a href="...">` → `<Link to="...">` 로 교체합니다. **이번에는 문서 재요청이 사라지는지** 다시 Network 탭으로 확인합니다.
-
-### 체감 실험 — Home에 카운터 심기
-
-이 실험을 꼭 해보세요. SPA의 장점을 강렬하게 체험할 수 있습니다.
+### 1️⃣ `src/App.jsx` — Header 배치
 
 ```jsx
-// src/pages/Home.jsx
-import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Header from './components/Header'      // ← 추가
+import Home from './pages/Home'
+import Movies from './pages/Movies'
+import About from './pages/About'
 
-function Home() {
-  const [count, setCount] = useState(0)
+function App() {
   return (
-    <div>
-      <h1>홈</h1>
-      <button onClick={() => setCount(count + 1)}>
-        카운트: {count}
-      </button>
-    </div>
+    <>
+      <Header />                                {/* ← Routes 바깥 */}
+      <Routes>
+        <Route path="/"       element={<Home />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/about"  element={<About />} />
+      </Routes>
+    </>
   )
 }
-export default Home
 ```
 
-- `<a>` 네비게이션: 카운트를 3까지 올린 뒤 "영화"로 이동 → 다시 "홈"으로 돌아오면 **카운트가 0으로 초기화** 됨
-- `<Link>` 네비게이션: 같은 흐름에서 **카운트가 유지됨** 🎉
+> 💡 **왜 `<Routes>` 바깥?** 안쪽에 두면 페이지가 바뀔 때마다 Header 가 **재마운트**되어 내부 state(로그인 상태 등)가 날아갑니다.
+
+### 2️⃣ `src/components/Header.jsx` — `<a>` → `<Link>` 교체
+
+파일을 열면 현재 `<a href="...">` 버전으로 작성돼 있습니다. 여러분이 할 일:
+
+- **TODO 1:** `react-router-dom`에서 `Link` import
+- **TODO 2:** 3개의 `<a>`를 모두 `<Link>`로 교체 (`href` → `to`)
+- 로고 `<a href="/">🎬 CineLog</a>` 도 `<Link to="/">` 로 바꿔도 좋습니다.
+
+```jsx
+// Before
+<a href="/"       className={styles.navLink}>홈</a>
+
+// After
+<Link to="/"       className={styles.navLink}>홈</Link>
+```
+
+## 🧪 체감 실험 — 카운터 상태 유지 확인
+
+Home 페이지에 이미 `useState` 카운터가 박혀 있습니다. 순서대로 해보세요:
+
+1. 홈에서 카운트 버튼을 **3번 이상** 클릭
+2. "영화" 메뉴로 이동
+3. 다시 "홈"으로 돌아옴
+
+| Before(`<a>`) | After(`<Link>`) |
+|---|---|
+| 카운트가 **0으로 초기화** 됨 | 카운트 **유지됨** 🎉 |
 
 ## 🔍 검증 방법
 
 | 검증 항목 | 기대 결과 |
 |----------|----------|
-| 네비게이션 어디에서든 클릭 | 주소가 바뀌고 해당 페이지가 렌더됨 |
-| DevTools Network 탭 → Fetch/XHR 및 Doc | 링크 클릭 시 document 재요청이 **없다** |
-| Home 카운터 올리기 → 영화 이동 → 홈 복귀 | 카운터가 **유지됨** |
-| 새로고침 (F5) | 카운터는 초기화됨 (새로고침은 SPA 재진입이므로 정상) |
+| DevTools → Network 탭 → Doc | Link 클릭 시 문서 재요청이 **없다** |
+| 카운트 올린 뒤 페이지 이동 후 복귀 | 카운트가 **유지됨** |
+| F5 새로고침 | 카운트 초기화됨 (정상 — SPA 재진입) |
 
 ## ⚠️ 흔한 실수
 
 1. **`to=` 대신 `href=`**
    ```jsx
-   // ❌ Link에 href 쓰면 그냥 <a> 로 동작
-   <Link href="/movies">영화</Link>
-
-   // ✅
-   <Link to="/movies">영화</Link>
+   <Link href="/movies">영화</Link>   // ❌ 그냥 <a> 로 동작
+   <Link to="/movies">영화</Link>     // ✅
    ```
-
-2. **`<Header />`를 `<Routes>` 안쪽에 둠**
-   - 페이지가 바뀔 때마다 Header가 **재마운트** 됩니다. 로그인 상태 같은 Header 내부 state가 날아갑니다.
-   ```jsx
-   // ❌
-   <Routes>
-     <Route path="/" element={<><Header/><Home/></>} />
-     <Route path="/movies" element={<><Header/><Movies/></>} />
-   </Routes>
-
-   // ✅
-   <>
-     <Header />
-     <Routes>
-       <Route path="/" element={<Home/>} />
-       <Route path="/movies" element={<Movies/>} />
-     </Routes>
-   </>
-   ```
+2. **`<Header />`를 `<Routes>` 안쪽에 배치** → 재마운트되어 상태 유실
 
 ## 🏆 도전 과제 (선택)
 
-- `<Link>` 안에 텍스트 대신 이미지나 아이콘(예: `🎬`)을 넣어보세요. `<Link>`는 JSX child를 자유롭게 받습니다.
-- `<Link to="/movies" target="_blank">`는 어떻게 동작하나요? 왜 그럴까요?
+`<Link>` 는 JSX child 를 자유롭게 받습니다. 로고 자리에 이모지+텍스트를 Link 하나로 묶어보세요.
 
 ## 💬 Discussion Prompts
 
-1. `<Link>`는 내부적으로 `<a>` 태그로 렌더됩니다. 그런데 왜 서버에 요청이 안 갈까요?
-   (힌트: Link는 `onClick`에서 `event.preventDefault()`를 호출합니다.)
-2. 카운트 상태가 유지되는 것의 본질은 "컴포넌트가 언마운트되지 않는다"는 뜻입니다. 이게 왜 MPA와 다를까요?
+1. `<Link>` 는 결국 DOM 에 `<a>` 로 렌더되는데 왜 서버 요청이 안 갈까요? (힌트: `onClick` 에서 `preventDefault`)
+2. 카운트가 유지되는 건 "컴포넌트가 언마운트되지 않는다"는 뜻입니다. MPA 에서는 왜 불가능할까요?
 
 ## 🆘 막혔을 때
 
 ```bash
-git checkout solution-실습02 -- src/
+git checkout solutions -- src/App.jsx src/components/Header.jsx
 ```
 
 ---
 
-**이전 단계 ←** [실습#1](./실습01-routes.md) | **다음 단계 →** [실습#3: NavLink](./실습03-navlink.md)
+**이전 ←** [실습#1](./실습01-routes.md) | **다음 →** [실습#3: NavLink](./실습03-navlink.md)

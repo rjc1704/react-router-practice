@@ -1,70 +1,85 @@
-# 실습#3 — NavLink로 현재 페이지 강조
+# 실습#3 — NavLink 로 현재 페이지 강조
 
 > 관련 교안: **PART 3-2. NavLink로 네비게이션 구현하기**
 
 ## 🎯 학습 목표
 
-`<Link>`를 `<NavLink>`로 교체하여 **현재 보고 있는 페이지의 링크만 자동으로 강조**되는 UX를 구현합니다. `isActive` 값과 `end` prop의 필요성을 이해합니다.
+현재 URL 에 해당하는 메뉴만 자동으로 강조되게 하려고 `<Link>` 대신 `<NavLink>` 를 씁니다. `isActive` 값과 `end` prop 의 쓰임을 이해합니다.
 
-## 🗺️ 개념 그림
+## 🗺️ 동작 그림
 
 ```
-/ 페이지:               /movies 페이지:
-┌──────────────────┐   ┌──────────────────┐
-│ [홈] 영화 소개    │   │ 홈 [영화] 소개    │
-│  ^^^             │   │      ^^^^^       │
-│  active 자동 부여 │   │   active 자동 부여 │
-└──────────────────┘   └──────────────────┘
-
-NavLink 는 내부적으로:
-  현재 URL === to 의 값  →  isActive = true
-                        →  className 에 'active' 자동 추가
+/ 페이지              /movies 페이지       /movies/drama 페이지
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│ [홈] 영화 소개│    │ 홈 [영화] 소개│    │ 홈 [영화] 소개│
+│  ^^^         │     │      ^^^^^   │     │      ^^^^^   │
+│ active 자동  │     │ active 자동  │     │ 👈 /movies 가 │
+└──────────────┘     └──────────────┘     │ /movies/drama 의│
+                                           │ 접두사이므로    │
+                                           │ 기본 활성화됨    │
+                                           └──────────────┘
 ```
 
-## ✅ 구현 요구사항
+## ✅ 할 일 — `src/components/Header.jsx` 한 파일만 수정
 
-- [ ] **TODO 1:** `Header.jsx`에서 `Link`를 `NavLink`로 교체
-- [ ] **TODO 2:** `className`을 함수 형태로 바꿔 `isActive`에 따라 `active` 클래스 부여
-  ```jsx
-  className={({ isActive }) =>
-    isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-  }
-  ```
-- [ ] **TODO 3:** 모든 페이지에서 "홈"이 항상 강조되는 현상을 직접 확인하세요.
-  - 이유는 `path="/"`가 **모든 경로의 접두사**이기 때문입니다 (`/movies`도 `/`로 시작).
-- [ ] **TODO 4:** 홈 NavLink에만 `end` prop을 추가해서 해결
-  ```jsx
-  <NavLink to="/" end className={...}>홈</NavLink>
-  ```
+1. `Link` → `NavLink` 로 교체 (import 와 JSX 모두)
+2. `className` 에 함수를 전달해 `isActive` 에 따라 `active` 클래스를 붙이고 떼기
+
+```jsx
+import { NavLink } from 'react-router-dom'
+
+const getClassName = ({ isActive }) =>
+  isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+
+<NavLink to="/"       className={getClassName}>홈</NavLink>
+<NavLink to="/movies" className={getClassName}>영화</NavLink>
+<NavLink to="/about"  className={getClassName}>소개</NavLink>
+```
+
+## 🧪 `end` prop — 언제 필요한가?
+
+### 🙋 루트 경로 `to="/"` 의 경우 — **end 가 필요 없습니다** ✨
+
+> React Router v7 문서 원문:
+> *"NavLink to="/" is an exceptional case ... it **effectively ignores the end prop** and only matches when you're at the root route."*
+
+즉 `<NavLink to="/">`는 **자동으로** 루트일 때만 활성화됩니다. v6 초기의 "모든 페이지에서 홈이 강조되는" 고전적 문제는 이미 내부에서 해결돼 있습니다.
+
+### 🙋 하지만 **하위 경로가 있는 NavLink** 는 여전히 `end` 가 필요합니다
+
+이 현상은 **실습#5 에서 `/movies` 와 `/movies/drama` 가 공존할 때** 체감합니다.
+
+| 선언 | 현재 URL `/movies` | `/movies/drama` |
+|------|:---:|:---:|
+| `<NavLink to="/movies">전체</NavLink>` (end 없음) | ✅ | ✅ **예상치 못하게 활성!** |
+| `<NavLink to="/movies" end>전체</NavLink>` | ✅ | ❌ 정확히 일치할 때만 활성 |
+
+- 실습#3 에서는 `/movies`, `/about` 같은 **형제 레벨** 메뉴만 있으니 `end` 없이도 잘 동작합니다.
+- 실습#5 의 사이드바("전체" 링크)에서 `end` 의 위력을 확인하게 됩니다. (`MoviesLayout.jsx` 에 이미 반영돼 있습니다.)
 
 ## 🔍 검증 방법
 
-| 주소 | 강조돼야 할 링크 |
+| 주소 | 강조돼야 할 메뉴 |
 |------|-----------------|
-| `/`          | 홈        |
-| `/movies`    | 영화      |
-| `/about`     | 소개      |
+| `/`          | 홈       |
+| `/movies`    | 영화     |
+| `/about`     | 소개     |
 
-- DevTools → Elements 탭에서 해당 `<a>` 요소의 className에 `active`가 붙었다 떨어졌다 하는 것을 관찰하세요.
+- DevTools → Elements 탭에서 해당 `<a>` 요소의 `className` 에 `active` 가 토글되는 걸 관찰하세요.
 
 ## ⚠️ 흔한 실수
 
-1. **`className="active"` 문자열로만 작성**
+1. **`className="active"` 문자열로만 사용**
    ```jsx
-   // ❌ 항상 active 클래스가 붙음 — NavLink 기능 무의미
-   <NavLink to="/" className="active">홈</NavLink>
-
-   // ✅ 함수를 넘겨야 isActive 에 따라 분기됨
-   <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>홈</NavLink>
+   <NavLink to="/" className="active">홈</NavLink>   // ❌ 항상 활성
+   <NavLink to="/" className={({isActive}) => isActive ? 'active' : ''}>홈</NavLink>  // ✅
    ```
-
-2. **`end` prop 누락 → 홈이 모든 페이지에서 활성**
-   - 이것은 **버그가 아니라 NavLink의 기본 동작**입니다. `to="/"`는 접두사 매칭이라 `/movies`에서도 match됩니다.
-   - 정확히 `/`일 때만 활성화하려면 `end`를 추가하세요.
+2. **CSS Modules 의 `styles.active` 대신 전역 `"active"` 문자열**
+   - 이 프로젝트는 CSS Modules 를 쓰므로 `styles.active` 로 참조해야 합니다.
 
 ## 🏆 도전 과제 (선택)
 
-`className` 대신 `style` prop도 함수형을 지원합니다. 아래 패턴으로도 작성해 보세요.
+`className` 대신 `style` prop 을 함수로 넘기는 버전으로도 구현해 보세요.
 
 ```jsx
 <NavLink
@@ -73,26 +88,21 @@ NavLink 는 내부적으로:
     color: isActive ? '#ffd166' : '#ccc',
     fontWeight: isActive ? 700 : 400,
   })}
->
-  영화
-</NavLink>
+>영화</NavLink>
 ```
-
-> CSS Modules 없이 인라인 스타일만으로도 같은 효과를 낼 수 있습니다. 상황에 따라 골라 쓰세요.
 
 ## 💬 Discussion Prompts
 
-1. `Link`와 `NavLink`는 언제 각각 쓰는 게 좋을까요?
-   (힌트: "현재 페이지를 알아야 하는 위치인지"가 기준)
-2. `end` prop은 왜 "기본값 false"일까요? 어떤 UX에서 접두사 매칭이 더 유용할까요?
-   (예: `/settings/profile`에서 `/settings` 링크가 활성되길 원하는 경우)
+1. `Link` 와 `NavLink` 중 어느 쪽을 기본으로 써야 할까요? 의견을 말해보세요.
+2. `end` 가 "기본값 false" 인 이유는 뭘까요? 어떤 UX 에서 접두사 매칭이 더 유용한가요?
+   (힌트: `/settings/profile` 에서 `/settings` 링크가 활성되면 자연스러움)
 
 ## 🆘 막혔을 때
 
 ```bash
-git checkout solution-실습03 -- src/
+git checkout solutions -- src/components/Header.jsx
 ```
 
 ---
 
-**이전 단계 ←** [실습#2](./실습02-link.md) | **다음 단계 →** [실습#4: useNavigate](./실습04-useNavigate.md)
+**이전 ←** [실습#2](./실습02-link.md) | **다음 →** [실습#4: useNavigate](./실습04-useNavigate.md)

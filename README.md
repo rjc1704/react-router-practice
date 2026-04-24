@@ -50,16 +50,35 @@ npm run dev
 ```
 react-router-practice/
 ├── docs/                      # 실습별 안내 문서 (이곳부터 읽으세요)
-├── src/
-│   ├── main.jsx               # 앱 진입점 (실습#1에서 BrowserRouter 래핑)
-│   ├── App.jsx                # Routes 선언 (실습마다 라우트 추가)
-│   ├── pages/                 # 각 페이지 컴포넌트 (실습 진행하며 생성)
-│   ├── components/            # 재사용 컴포넌트 (Header, MovieCard 등)
-│   ├── data/movies.js         # 영화 시드 데이터 ⚠️ 강사가 미리 제공
-│   ├── styles/layout.module.css  # 공통 스타일 ⚠️ 강사가 미리 제공
-│   └── lib/auth.js            # (실습#7부터) 가짜 로그인 유틸
-└── README.md
+└── src/
+    ├── main.jsx               # 앱 진입점 (실습#1에서 BrowserRouter 래핑)
+    ├── App.jsx                # ★ Routes 선언 — 여러분이 가장 많이 건드릴 파일
+    ├── pages/                 # 모든 페이지 컴포넌트 (사전 제공, 내부 완성)
+    │   ├── Home.jsx           #   실습#4 Home 버튼 TODO
+    │   ├── Movies.jsx
+    │   ├── About.jsx
+    │   ├── ErrorDemo.jsx      #   실습#4 useNavigate TODO
+    │   ├── MoviesLayout.jsx   #   실습#5 중첩 레이아웃 (Outlet 포함)
+    │   ├── MoviesIntro.jsx
+    │   ├── genres/            #   실습#6 카드를 Link 로 감싸기 TODO
+    │   │   ├── Drama.jsx
+    │   │   ├── Action.jsx
+    │   │   └── Romance.jsx
+    │   ├── MovieDetail.jsx    #   실습#6 useParams TODO
+    │   ├── Login.jsx          #   실습#7 useNavigate TODO
+    │   ├── MyPage.jsx
+    │   ├── NotFound.jsx
+    │   └── Search.jsx         #   실습#8 useSearchParams TODO
+    ├── components/
+    │   ├── Header.jsx         # ★ 실습#2/#3/#7/#8 에서 점진적으로 확장
+    │   ├── MovieCard.jsx
+    │   └── ProtectedRoute.jsx # ★ 실습#7 Navigate TODO
+    ├── data/movies.js         # 영화 시드 데이터 (제공)
+    ├── styles/layout.module.css  # 공통 스타일 (제공)
+    └── lib/auth.js            # 가짜 로그인 유틸 (실습#7부터 사용)
 ```
+
+> 💡 **★ 표시** 파일들이 실습의 핵심입니다. 나머지는 이미 구현돼 있어 여러분이 열어보기만 하면 됩니다.
 
 ---
 
