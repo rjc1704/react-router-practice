@@ -50,9 +50,9 @@ function App() {
 
 ```jsx
 function Home() {
-  const navigate = useNavigate()
-  navigate('/movies')
-  return <h1>홈</h1>
+  const navigate = useNavigate();
+  navigate("/movies");
+  return <h1>홈</h1>;
 }
 ```
 
@@ -74,6 +74,7 @@ function Home() {
 **Q1:** `BrowserRouter`는 `<App/>`을 감싸는 **가장 바깥**이어야 합니다. main.jsx에서 `<BrowserRouter><App/></BrowserRouter>`로 감싸고, App.jsx 안의 `<BrowserRouter>`는 제거해야 합니다. `<Routes>`는 `<BrowserRouter>` 안에 있어야 합니다.
 
 **Q2:** **(A), (C), (D)**
+
 - (A) 일반 `<a>`는 서버 요청을 보냅니다.
 - (B) Link는 클라이언트 라우팅이라 서버 요청 없음.
 - (C) 새로고침은 HTML부터 다시 받습니다.
@@ -85,15 +86,10 @@ function Home() {
 **Q4:** **무한 루프로 브라우저가 멈춥니다.** 렌더 중 `navigate()`가 실행되면 → URL 변경 → 리렌더 → 또 `navigate()` → 무한 반복. 렌더 시점 리다이렉트가 필요하다면 `<Navigate to="/movies"/>`(실습#7)를 쓰거나 `useEffect`로 감싸야 합니다.
 
 **Q5:**
+
 1. **useNavigate** — API 응답 콜백 안에서 이동해야 함
 2. **Link (또는 NavLink)** — 사용자가 직접 클릭, 현재 페이지 강조도 필요하므로 NavLink가 더 적합
 3. **useNavigate** — 폼 제출 핸들러 안에서 이동
 4. **Link** — 사용자가 직접 클릭하는 UI
 
 ---
-
-## ✅ 4/5 이상 맞췄다면 → 실습#5로
-
-아직 자신 없다면 해당 실습 문서로 돌아가 흔한 실수 섹션을 한 번 더 읽고 오세요.
-
-**다음 →** [실습#5: Outlet과 중첩 라우팅](./실습05-outlet-nested.md)
