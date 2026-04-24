@@ -1,0 +1,252 @@
+/* =============================================================
+   CineLog 공통 레이아웃 스타일 (강사 사전 제공)
+   - Header, Sidebar, Card, NavLink 활성 스타일이 준비돼 있습니다.
+   - 학생은 CSS를 직접 건드릴 필요 없이 className만 연결하세요.
+   ============================================================= */
+
+/* ---------- 전체 레이아웃 ---------- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.main {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ---------- 헤더 / 네비게이션 ---------- */
+.header {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.navLink {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s;
+}
+
+.navLink:hover {
+  color: #fff;
+}
+
+/* NavLink가 현재 페이지일 때 자동으로 붙는 클래스 */
+.active {
+  color: #ffd166 !important;
+  border-bottom: 2px solid #ffd166;
+  font-weight: 600;
+}
+
+/* ---------- 페이지 타이틀 ---------- */
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ---------- 중첩 라우트: 사이드바 + 콘텐츠 ---------- */
+.moviesLayout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 0;
+  border-right: 1px solid #eee;
+}
+
+.sidebarLink {
+  display: block;
+  padding: 10px 16px;
+  color: #555;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.sidebarLink:hover {
+  background: #f5f5f5;
+}
+
+.sidebarLink.active {
+  background: #fff4d4;
+  color: #5c4a00 !important;
+  border: none;
+  font-weight: 600;
+}
+
+/* ---------- 영화 카드 ---------- */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  display: block;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cardPoster {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cardMeta {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ---------- 버튼 ---------- */
+.button {
+  padding: 10px 18px;
+  background: #ffd166;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.button:hover {
+  background: #ffc233;
+}
+
+.buttonSecondary {
+  background: #eee;
+  color: #333;
+}
+
+.buttonSecondary:hover {
+  background: #ddd;
+}
+
+/* ---------- 검색창 ---------- */
+.searchInput {
+  padding: 8px 14px;
+  border: 1px solid #444;
+  background: #2a2a2a;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 220px;
+}
+
+.searchInput::placeholder {
+  color: #888;
+}
+
+/* ---------- 상세 페이지 ---------- */
+.detail {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.detailPoster {
+  font-size: 120px;
+  text-align: center;
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 40px 0;
+}
+
+.detailTitle {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.detailMeta {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.detailSummary {
+  line-height: 1.7;
+  color: #333;
+}
+
+/* ---------- 404 / 빈 상태 ---------- */
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: #888;
+}
+
+.emptyTitle {
+  font-size: 64px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ---------- 반응형 ---------- */
+@media (max-width: 720px) {
+  .moviesLayout,
+  .detail {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
