@@ -32,7 +32,7 @@ Route 선언:
 ### 1️⃣ `src/pages/MovieDetail.jsx` — useParams 호출
 
 ```jsx
-import { useParams } from "react-router-dom"; // ← 주석 해제
+import { useParams } from "react-router"; // ← 주석 해제
 
 function MovieDetail() {
   const { movieId } = useParams(); // ← 추가
@@ -61,7 +61,7 @@ import MovieDetail from "./pages/MovieDetail";
 각 파일의 TODO 2 를 처리합니다. 3파일 **동일한 패턴**이므로 한 번 이해하면 나머지는 복붙입니다.
 
 ```jsx
-import { Link } from "react-router-dom"; // ← 주석 해제
+import { Link } from "react-router"; // ← 주석 해제
 
 {
   items.map((movie) => (

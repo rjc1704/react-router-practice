@@ -26,7 +26,7 @@
 2. `className` 에 함수를 전달해 `isActive` 에 따라 `active` 클래스를 붙이고 떼기
 
 ```jsx
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 
 const getClassName = ({ isActive }) =>
   isActive ? `${styles.navLink} ${styles.active}` : styles.navLink

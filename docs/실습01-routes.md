@@ -25,7 +25,7 @@
 
 ### 1️⃣ `src/main.jsx` — BrowserRouter 로 감싸기
 
-- **TODO 1:** `react-router-dom`에서 `BrowserRouter` import
+- **TODO 1:** `react-router`에서 `BrowserRouter` import
 - **TODO 2:** `<App />`을 `<BrowserRouter>...</BrowserRouter>`로 감싸기
 
 ### 2️⃣ `src/App.jsx` — Routes 작성

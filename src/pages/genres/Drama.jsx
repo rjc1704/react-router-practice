@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
-import { getMoviesByGenre } from '../../data/movies'
-import MovieCard from '../../components/MovieCard'
-import styles from '../../styles/layout.module.css'
+import { Link } from "react-router";
+import { getMoviesByGenre } from "../../data/movies";
+import MovieCard from "../../components/MovieCard";
+import styles from "../../styles/layout.module.css";
 
 function Drama() {
-  const items = getMoviesByGenre('drama')
+  const items = getMoviesByGenre("drama");
 
   return (
     <div className={styles.cardGrid}>
@@ -12,13 +12,13 @@ function Drama() {
         <Link
           key={movie.id}
           to={`/movies/${movie.id}`}
-          style={{ textDecoration: 'none', color: 'inherit' }}
+          style={{ textDecoration: "none", color: "inherit" }}
         >
           <MovieCard movie={movie} />
         </Link>
       ))}
     </div>
-  )
+  );
 }
 
-export default Drama
+export default Drama;

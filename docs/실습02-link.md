@@ -24,7 +24,7 @@
 ### 1️⃣ `src/App.jsx` — Header 배치
 
 ```jsx
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router";
 import Header from "./components/Header"; // ← 추가
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
@@ -50,7 +50,7 @@ function App() {
 
 파일을 열면 현재 `<a href="...">` 버전으로 작성돼 있습니다. 여러분이 할 일:
 
-- **TODO 1:** `react-router-dom`에서 `Link` import
+- **TODO 1:** `react-router`에서 `Link` import
 - **TODO 2:** 3개의 `<a>`를 모두 `<Link>`로 교체 (`href` → `to`)
 - 로고 `<a href="/">🎬 CineLog</a>` 도 `<Link to="/">` 로 바꿔도 좋습니다.
 

@@ -30,7 +30,7 @@
 ### 1️⃣ `src/pages/Home.jsx` — "영화 구경하기" 버튼 활성화
 
 ```jsx
-import { useNavigate } from "react-router-dom"; // ← 주석 해제
+import { useNavigate } from "react-router"; // ← 주석 해제
 
 function Home() {
   // ...
@@ -46,7 +46,7 @@ function Home() {
 ### 2️⃣ `src/pages/ErrorDemo.jsx` — 홈으로 가기 버튼
 
 ```jsx
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function ErrorDemo() {
   const navigate = useNavigate();

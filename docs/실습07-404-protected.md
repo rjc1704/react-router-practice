@@ -35,7 +35,7 @@
 이 파일이 실습#7의 하이라이트입니다. 단 3줄만 풀리면 됩니다.
 
 ```jsx
-import { Navigate } from "react-router-dom"; // ← 주석 해제
+import { Navigate } from "react-router"; // ← 주석 해제
 import { isLoggedIn } from "../lib/auth";
 
 function ProtectedRoute({ children }) {
@@ -49,7 +49,7 @@ function ProtectedRoute({ children }) {
 ### 2️⃣ `src/pages/Login.jsx` — 로그인 후 이동
 
 ```jsx
-import { useNavigate } from "react-router-dom"; // ← 주석 해제
+import { useNavigate } from "react-router"; // ← 주석 해제
 
 function Login() {
   const navigate = useNavigate(); // ← 추가
@@ -67,7 +67,7 @@ function Login() {
 Header.jsx 하단의 주석 처리된 "로그인/로그아웃 토글" JSX 를 주석 해제하고, 관련 import 도 해제하세요.
 
 ```jsx
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { isLoggedIn, logout } from "../lib/auth";
 // ...
 const navigate = useNavigate();

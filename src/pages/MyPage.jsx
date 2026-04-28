@@ -5,21 +5,21 @@
 // 학생이 이 파일 자체를 고칠 필요는 없습니다.
 // ============================================================
 
-import { useNavigate } from 'react-router-dom'
-import * as auth from '../lib/auth'
-import styles from '../styles/layout.module.css'
-import MovieCard from '../components/MovieCard'
-import { movies } from '../data/movies'
+import { useNavigate } from "react-router";
+import * as auth from "../lib/auth";
+import styles from "../styles/layout.module.css";
+import MovieCard from "../components/MovieCard";
+import { movies } from "../data/movies";
 
 // 데모용: 마이페이지에 임의로 "좋아요한 영화 3편"을 표시
-const liked = movies.slice(0, 3)
+const liked = movies.slice(0, 3);
 
 function MyPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleLogout() {
-    auth.logout()
-    navigate('/', { replace: true })
+    auth.logout();
+    navigate("/", { replace: true });
   }
 
   return (
@@ -29,7 +29,9 @@ function MyPage() {
 
       <h2 style={{ marginTop: 32 }}>내가 좋아요한 영화</h2>
       <div className={styles.cardGrid} style={{ marginTop: 12 }}>
-        {liked.map((m) => <MovieCard key={m.id} movie={m} />)}
+        {liked.map((m) => (
+          <MovieCard key={m.id} movie={m} />
+        ))}
       </div>
 
       <button
@@ -40,7 +42,7 @@ function MyPage() {
         로그아웃
       </button>
     </section>
-  )
+  );
 }
 
-export default MyPage
+export default MyPage;

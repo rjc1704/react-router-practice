@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom'
-import styles from '../styles/layout.module.css'
+import { useNavigate } from "react-router";
+import styles from "../styles/layout.module.css";
 
 function ErrorDemo() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleGoHome() {
-    navigate('/')
+    navigate("/");
   }
 
   return (
@@ -17,7 +17,7 @@ function ErrorDemo() {
         홈으로 가기
       </button>
     </section>
-  )
+  );
 }
 
-export default ErrorDemo
+export default ErrorDemo;

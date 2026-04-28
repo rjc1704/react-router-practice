@@ -23,7 +23,7 @@
 이미 UI, 필터 로직, 장르 버튼은 모두 완성돼 있습니다. 여러분은 **useSearchParams 호출**과 **setSearchParams 사용** 부분만 채우면 됩니다.
 
 ```jsx
-import { useSearchParams } from "react-router-dom"; // ← 주석 해제
+import { useSearchParams } from "react-router"; // ← 주석 해제
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams(); // ← 이 한 줄로 교체
@@ -44,7 +44,7 @@ Header.jsx 에 주석 처리된 `<input type="search" ...>` 를 **해제**합니
 
 ```jsx
 // import 이미 실습#7 에서 열었다면 재사용
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function handleSearch(e) {
   if (e.key !== "Enter") return;

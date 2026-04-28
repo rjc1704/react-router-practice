@@ -17,7 +17,7 @@ createRoot(...).render(
 )
 
 // App.jsx
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Routes, Route, BrowserRouter } from 'react-router'
 
 function App() {
   return (

@@ -1,11 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { findMovieById } from '../data/movies'
-import styles from '../styles/layout.module.css'
+import { useParams, useNavigate } from "react-router";
+import { findMovieById } from "../data/movies";
+import styles from "../styles/layout.module.css";
 
 function MovieDetail() {
-  const { movieId } = useParams()
-  const movie = findMovieById(movieId)
-  const navigate = useNavigate()
+  const { movieId } = useParams();
+  const movie = findMovieById(movieId);
+  const navigate = useNavigate();
 
   if (!movie) {
     return (
@@ -14,7 +14,7 @@ function MovieDetail() {
         <h1>영화를 찾을 수 없습니다</h1>
         <p>URL 의 movieId 가 올바른지 확인하세요.</p>
       </section>
-    )
+    );
   }
 
   return (
@@ -36,7 +36,7 @@ function MovieDetail() {
         </button>
       </div>
     </section>
-  )
+  );
 }
 
-export default MovieDetail
+export default MovieDetail;
